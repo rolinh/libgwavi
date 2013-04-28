@@ -1,0 +1,7 @@
+*.o
+*.swp
+examples/demo
+doc/html
+doc/latex
+doc/man
+lib/*
