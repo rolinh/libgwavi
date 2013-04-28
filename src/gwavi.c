@@ -39,6 +39,7 @@
 #include <string.h>
 
 #include "gwavi.h"
+#include "avi-utils.h"
 #include "fileio.h"
 
 /**
