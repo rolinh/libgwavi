@@ -70,11 +70,11 @@ channel to your AVI file.
     struct gwavi_t *gwavi;
     struct gwavi_audio_t audio;
 
-    gwavi = gwavi_open(output_file,
-                       frame_width,
-                       frame_height,
-                       fourcc,
-                       frame_rate,
+    gwavi = gwavi_open("foo.avi",
+                       1920,
+                       1080,
+                       "MJPG",
+                       30,
                        &audio);
 
 Note that the audio channel is optional and that you can pass `NULL` as the last
