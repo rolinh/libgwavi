@@ -34,15 +34,15 @@ OBJS = ${SRCS:${SRC}/%.c=${OBJ}/%.o}
 
 .PATH: ${SRC}
 
-all: ${NAME} examples doc
-
-${OBJS}: ${OBJ}/%.o : ${SRC}/%.c
-	${CC} ${CFLAGS} -o $@ -c $<
-
 ${NAME}: ${OBJS}
 	${CC} ${CFLAGS} -shared -Wl,-soname,lib${NAME}.so.${VERSION_MAJOR} -o ${LIB}/lib${NAME}.so.${VERSION} ${OBJS}
 	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so.${VERSION_MAJOR}
 	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so
+
+${OBJS}: ${OBJ}/%.o : ${SRC}/%.c
+	${CC} ${CFLAGS} -o $@ -c $<
+
+all: ${NAME} examples doc
 
 debug: ${NAME}
 
