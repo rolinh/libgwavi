@@ -45,7 +45,7 @@
 int
 write_avi_header(FILE *out, struct gwavi_header_t *avi_header)
 {
-	int marker, t;
+	long marker, t;
 
 	if (write_chars_bin(out, "avih", 4) == -1) {
 		(void)fprintf(stderr, "write_avi_header: write_chars_bin() "
@@ -96,7 +96,7 @@ write_avi_header(FILE *out, struct gwavi_header_t *avi_header)
 		perror("write_avi_header (fseek)");
 		return -1;
 	}
-	if (write_int(out, (t - marker - 4)) == -1)
+	if (write_int(out, (int)(t - marker - 4)) == -1)
 		goto write_int_failed;
 	if (fseek(out, t, SEEK_SET) == -1) {
 		perror("write_avi_header (fseek)");
@@ -113,7 +113,7 @@ write_int_failed:
 int
 write_stream_header(FILE *out, struct gwavi_stream_header_t *stream_header)
 {
-	int marker, t;
+	long marker, t;
 
 	if (write_chars_bin(out, "strh", 4) == -1)
 		goto write_chars_bin_failed;
@@ -161,7 +161,7 @@ write_stream_header(FILE *out, struct gwavi_stream_header_t *stream_header)
 		perror("write_stream_header (fseek)");
 		return -1;
 	}
-	write_int(out, (t - marker - 4));
+	write_int(out, (int)(t - marker - 4));
 	if (fseek(out, t, SEEK_SET) == -1){
 		perror("write_stream_header (fseek)");
 		return -1;
@@ -181,7 +181,7 @@ write_chars_bin_failed:
 int
 write_stream_format_v(FILE *out, struct gwavi_stream_format_v_t *stream_format_v)
 {
-	int marker,t;
+	long marker,t;
 
 	if (write_chars_bin(out, "strf", 4) == -1) {
 		(void)fprintf(stderr, "write_stream_format_v: write_chars_bin()"
@@ -247,7 +247,7 @@ write_stream_format_v(FILE *out, struct gwavi_stream_format_v_t *stream_format_v
 		perror("write_stream_format_v (fseek)");
 		return -1;
 	}
-	if (write_int(out, (t - marker - 4)) == -1)
+	if (write_int(out, (int)(t - marker - 4)) == -1)
 		goto write_int_failed;
 	if (fseek(out, t, SEEK_SET) == -1) {
 		perror("write_stream_format_v (fseek)");
@@ -268,7 +268,7 @@ fputc_failed:
 int
 write_stream_format_a(FILE *out, struct gwavi_stream_format_a_t *stream_format_a)
 {
-	int marker, t;
+	long marker, t;
 
 	if (write_chars_bin(out, "strf", 4) == -1) {
 		(void)fprintf(stderr, "write_stream_format_a: write_chars_bin()"
@@ -305,7 +305,7 @@ write_stream_format_a(FILE *out, struct gwavi_stream_format_a_t *stream_format_a
 		perror("write_stream_format_a (fseek)");
 		return -1;
 	}
-	if (write_int(out, (t - marker - 4)) == -1)
+	if (write_int(out, (int)(t - marker - 4)) == -1)
 		goto write_int_failed;
 	if (fseek(out, t, SEEK_SET) == -1) {
 		perror("write_stream_format_a (fseek)");
@@ -368,7 +368,7 @@ write_avi_header_chunk(struct gwavi_t *gwavi)
 
 	if (fseek(out, sub_marker, SEEK_SET) == -1)
 		goto fseek_failed;
-	if (write_int(out, (t - sub_marker - 4)) == -1)
+	if (write_int(out, (int)(t - sub_marker - 4)) == -1)
 		goto write_int_failed;
 	if (fseek(out, t, SEEK_SET) == -1)
 		goto fseek_failed;
@@ -397,7 +397,7 @@ write_avi_header_chunk(struct gwavi_t *gwavi)
 			goto ftell_failed;
 		if (fseek(out, sub_marker, SEEK_SET) == -1)
 			goto fseek_failed;
-		if (write_int(out,(t - sub_marker - 4)) == -1)
+		if (write_int(out, (int)(t - sub_marker - 4)) == -1)
 			goto write_int_failed;
 		if (fseek(out, t, SEEK_SET) == -1)
 			goto fseek_failed;
@@ -407,7 +407,7 @@ write_avi_header_chunk(struct gwavi_t *gwavi)
 		goto ftell_failed;
 	if (fseek(out, marker, SEEK_SET) == -1)
 		goto fseek_failed;
-	if (write_int(out, (t - marker - 4)) == -1)
+	if (write_int(out, (int)(t - marker - 4)) == -1)
 		goto write_int_failed;
 	if (fseek(out, t, SEEK_SET) == -1)
 		goto fseek_failed;
@@ -434,7 +434,7 @@ write_chars_bin_failed:
 int
 write_index(FILE *out, int count, int *offsets)
 {
-	int marker, t;
+	long marker, t;
 	int offset = 4;
 
 	if (offsets == 0)
@@ -476,7 +476,7 @@ write_index(FILE *out, int count, int *offsets)
 		perror("write_index (fseek)");
 		return -1;
 	}
-	if (write_int(out, (t - marker - 4)) == -1)
+	if (write_int(out, (int)(t - marker - 4)) == -1)
 		goto write_int_failed;
 	if (fseek(out, t, SEEK_SET) == -1) {
 		perror("write_index (fseek)");

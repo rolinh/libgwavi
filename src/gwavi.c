@@ -323,7 +323,7 @@ gwavi_close(struct gwavi_t *gwavi)
 		goto ftell_failed;
 	if (fseek(gwavi->out, gwavi->marker, SEEK_SET) == -1)
 		goto fseek_failed;
-	if (write_int(gwavi->out, (t-gwavi->marker - 4)) == -1) {
+	if (write_int(gwavi->out, (int)(t - gwavi->marker - 4)) == -1) {
 		(void)fprintf(stderr, "gwavi_close: write_int() failed\n");
 		return -1;
 	}
@@ -356,7 +356,7 @@ gwavi_close(struct gwavi_t *gwavi)
 		goto ftell_failed;
 	if (fseek(gwavi->out, 4, SEEK_SET) == -1)
 		goto fseek_failed;
-	if (write_int(gwavi->out, (t - 8)) == -1) {
+	if (write_int(gwavi->out, (int)(t - 8)) == -1) {
 		(void)fprintf(stderr, "gwavi_close: write_int() failed\n");
 		return -1;
 	}

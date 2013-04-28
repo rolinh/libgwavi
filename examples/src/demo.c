@@ -32,7 +32,7 @@
 /*
  * demo.c
  *
- * Demo application (that still needs to be written...
+ * Demo application (that still needs to be written...)
  */
 #include <stdio.h>
 #include <stdlib.h>
