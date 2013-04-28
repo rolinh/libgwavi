@@ -35,7 +35,7 @@ OBJS = ${SRCS:${SRC}/%.c=${OBJ}/%.o}
 .PATH: ${SRC}
 
 ${NAME}: ${OBJS}
-	${CC} ${CFLAGS} -shared -Wl,-soname,lib${NAME}.so.${VERSION_MAJOR} -o ${LIB}/lib${NAME}.so.${VERSION} ${OBJS}
+	${CC} ${CFLAGS} -shared -o ${LIB}/lib${NAME}.so.${VERSION} ${OBJS}
 	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so.${VERSION_MAJOR}
 	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so
 
