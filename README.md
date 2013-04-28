@@ -41,7 +41,8 @@ using this command:
 
 # HOW TO USE IT
 
-For a complete example, have a look at the demo application in the demo folder.
+For a complete example, have a look at the demo application in the examples
+folder.
 
 If your in a hurry, here is a small explanation on how to use it.
 
