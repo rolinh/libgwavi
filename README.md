@@ -60,10 +60,12 @@ There is basically four main function that you will need to use:
 
   * `gwavi_close()`
 
-Please, note that error checking has been voluntarily omitted for the sake of
-the clarification.
+Please, note that error checking has been voluntarily omitted int the examples
+below for the sake of the clarification.
 
-So first, you should declare a `gwavi_t` structure and initialize it:
+So first, you should declare a `gwavi_t` structure and initialize it. You can
+optionnaly declare a `gwavi_audio_t` structure if you need to add an audio
+channel to your AVI file.
 
     struct gwavi_t *gwavi;
     struct gwavi_audio_t audio;
