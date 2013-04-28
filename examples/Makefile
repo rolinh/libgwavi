@@ -33,7 +33,7 @@ ${OBJS}: ${OBJ}/%.o : ${SRC}/%.c
 	${CC} ${CFLAGS} -o $@ -c $<
 
 ${EXEC}: ${OBJS}
-	${CC} ${LDFLAGS} -o ${EXEC} ${OBJS}
+	${CC} -o ${EXEC} ${OBJS} ${LDFLAGS}
 
 debug: ${EXEC}
 debug: CFLAGS += ${CFDEBUG}

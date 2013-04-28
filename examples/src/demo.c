@@ -39,8 +39,6 @@
 
 #include "gwavi.h"
 
-#include "gwavi.h"
-
 int
 main(int argc, char *argv[])
 {
