@@ -48,7 +48,7 @@ debug: ${NAME}
 
 debug: CFLAGS += ${CFDEBUG}
 
-examples:
+examples: ${NAME}
 	${MAKE} -C ${EXAMPLES}
 
 doc: ${OBJS}

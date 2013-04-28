@@ -1,3 +1,5 @@
+# README
+
 # DISCLAIMER
 
 Even though you can already generate AVI files, this library has not reached a
@@ -35,7 +37,7 @@ To generate the documentation of the library functions, type the following:
 The code includes a demo application that uses `libgwavi`. You can build it
 using this command:
 
-    make demo
+    make examples
 
 # HOW TO USE IT
 
