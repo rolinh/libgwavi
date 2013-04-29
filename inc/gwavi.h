@@ -103,14 +103,6 @@ struct gwavi_stream_format_a_t
 	unsigned short size;
 };
 
-struct gwavi_index_t
-{
-	int id;
-	int flags;
-	int offset;
-	int length;
-};
-
 struct gwavi_t
 {
 	FILE *out;
