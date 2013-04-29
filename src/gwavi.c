@@ -186,7 +186,8 @@ gwavi_open(char *filename, unsigned int width, unsigned int height,
 		goto write_chars_bin_failed;
 
 	gwavi->offsets_len = 1024;
-	if ((gwavi->offsets = malloc((size_t)gwavi->offsets_len * sizeof(int)))
+	if ((gwavi->offsets = malloc((size_t)gwavi->offsets_len *
+				      sizeof(unsigned int)))
 			== NULL) {
 		(void)fprintf(stderr, "gwavi_info: could not allocate memory "
 			      "for gwavi offsets table\n");
@@ -227,7 +228,8 @@ gwavi_add_frame(struct gwavi_t *gwavi, unsigned char *buffer, size_t len)
 	if (gwavi->offset_count >= gwavi->offsets_len) {
 		gwavi->offsets_len += 1024;
 		gwavi->offsets = realloc(gwavi->offsets,
-					(size_t)gwavi->offsets_len * sizeof(int));
+					(size_t)gwavi->offsets_len *
+					sizeof(unsigned int));
 	}
 
 	gwavi->offsets[gwavi->offsets_ptr++] = (unsigned int)(len + maxi_pad);
@@ -280,7 +282,8 @@ gwavi_add_audio(struct gwavi_t *gwavi, unsigned char *buffer, size_t len)
 	if (gwavi->offset_count >= gwavi->offsets_len) {
 		gwavi->offsets_len += 1024;
 		gwavi->offsets = realloc(gwavi->offsets,
-					(size_t)gwavi->offsets_len*sizeof(int));
+					(size_t)gwavi->offsets_len *
+					sizeof(unsigned int));
 	}
 
 	gwavi->offsets[gwavi->offsets_ptr++] =
