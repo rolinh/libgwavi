@@ -38,22 +38,22 @@
 #include <stdlib.h>
 
 int
-write_int(FILE *out, int n)
+write_int(FILE *out, unsigned int n)
 {
-	if (fputc((n&255), out) == EOF)
+	if (fputc((n & 255), out) == EOF)
 		return -1;
-	if (fputc(((n>>8)&255), out) == EOF)
+	if (fputc(((n >> 8) & 255), out) == EOF)
 		return -1;
-	if (fputc(((n>>16)&255), out) == EOF)
+	if (fputc(((n >> 16) & 255), out) == EOF)
 		return -1;
-	if (fputc(((n>>24)&255), out) == EOF)
+	if (fputc(((n >> 24) & 255), out) == EOF)
 		return -1;
 
 	return 0;
 }
 
 int
-write_short(FILE *out, int n)
+write_short(FILE *out, unsigned int n)
 {
 	if (fputc((n & 255), out) == EOF)
 		return -1;

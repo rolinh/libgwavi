@@ -38,64 +38,69 @@
 /* structures */
 struct gwavi_header_t
 {
-	int time_delay;
-	int data_rate;
-	int reserved;
-	int flags;
-	int number_of_frames;
-	int initial_frames;
-	int data_streams;
-	int buffer_size;
-	int width;
-	int height;
-	int time_scale;
-	int playback_data_rate;
-	int starting_time;
-	int data_length;
+	unsigned int time_delay;
+	unsigned int data_rate;
+	unsigned int reserved;
+	unsigned int flags;
+	unsigned int number_of_frames;
+	unsigned int initial_frames;
+	unsigned int data_streams;
+	unsigned int buffer_size;
+	unsigned int width;
+	unsigned int height;
+	unsigned int time_scale;
+	unsigned int playback_data_rate;
+	unsigned int starting_time;
+	unsigned int data_length;
 };
 
 struct gwavi_stream_header_t
 {
 	char data_type[5];
 	char codec[5];
-	int flags;
-	int priority;
-	int initial_frames;
-	int time_scale;
-	int data_rate;
-	int start_time;
-	int data_length;
-	int buffer_size;
-	int quality;
-	int sample_size;
+	unsigned int flags;
+	unsigned int priority;
+	unsigned int initial_frames;
+	unsigned int time_scale;
+	unsigned int data_rate;
+	unsigned int start_time;
+	unsigned int data_length;
+	unsigned int buffer_size;
+	unsigned int video_quality;
+	/**
+	 * Value between 0-10000. If set to -1, drivers use default quality
+	 * value.
+	 */
+	int audio_quality;
+	unsigned int sample_size;
 };
 
 struct gwavi_stream_format_v_t
 {
-	int header_size;
-	int width;
-	int height;
-	short int num_planes;
-	short int bits_per_pixel;
-	int compression_type;
-	int image_size;
-	int x_pels_per_meter;
-	int y_pels_per_meter;
-	int colors_used;
-	int colors_important;
-	int *palette;
-	int palette_count;
+	unsigned int header_size;
+	unsigned int width;
+	unsigned int height;
+	unsigned short int num_planes;
+	unsigned short int bits_per_pixel;
+	unsigned int compression_type;
+	unsigned int image_size;
+	unsigned int x_pels_per_meter;
+	unsigned int y_pels_per_meter;
+	unsigned int colors_used;
+	unsigned int colors_important;
+	unsigned int *palette;
+	unsigned int palette_count;
 };
 
 struct gwavi_stream_format_a_t
 {
-	short format_type;
-	int channels;
-	int sample_rate;
-	int bytes_per_second;
-	int block_align;
-	int bits_per_sample;
-	short size;
+	unsigned short format_type;
+	unsigned int channels;
+	unsigned int sample_rate;
+	unsigned int bytes_per_second;
+	unsigned int block_align;
+	unsigned int bits_per_sample;
+	unsigned short size;
 };
 
 struct gwavi_index_t
@@ -118,21 +123,22 @@ struct gwavi_t
 	int offsets_ptr;
 	int offsets_len;
 	long offsets_start;
-	int *offsets;
+	unsigned int *offsets;
 	int offset_count;
 };
 
 struct gwavi_audio_t
 {
-	int channels;
-	int bits;
-	int samples_per_second;
+	unsigned int channels;
+	unsigned int bits;
+	unsigned int samples_per_second;
 };
 
 
 /* Main ibrary functions */
-struct gwavi_t *gwavi_open(char *filename, int width, int height, char *fourcc,
-			   int fps, struct gwavi_audio_t *audio);
+struct gwavi_t *gwavi_open(char *filename, unsigned int width,
+			   unsigned int height, char *fourcc, unsigned int fps,
+			   struct gwavi_audio_t *audio);
 int gwavi_add_frame(struct gwavi_t *gwavi, unsigned char *buffer, size_t len);
 int gwavi_add_audio(struct gwavi_t *gwavi, unsigned char *buffer, size_t len);
 int gwavi_close(struct gwavi_t *gwavi);
@@ -143,9 +149,9 @@ int gwavi_close(struct gwavi_t *gwavi);
  * Note: AVI can only have a single frame rate, codec, size for the whole file
  * so this affects anything recorded before these functions are called.
  */
-void gwavi_set_framerate(struct gwavi_t *gwavi, int fps);
+void gwavi_set_framerate(struct gwavi_t *gwavi, unsigned int fps);
 void gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc);
-void gwavi_set_size(struct gwavi_t *gwavi, int width, int height);
+void gwavi_set_size(struct gwavi_t *gwavi, unsigned int width, unsigned int height);
 
 #endif /* ndef H_GWAVI */
 

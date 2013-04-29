@@ -37,8 +37,8 @@
 #define H_FILEIO
 
 /* Function prototypes */
-int write_int(FILE *out, int n);
-int write_short(FILE *out, int n);
+int write_int(FILE *out, unsigned int n);
+int write_short(FILE *out, unsigned int n);
 int write_chars(FILE *out, char *s);
 int write_chars_bin(FILE *out, char *s, int count);
 

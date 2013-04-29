@@ -47,7 +47,7 @@ int write_stream_format_v(FILE *out,
 int write_stream_format_a(FILE *out,
 			  struct gwavi_stream_format_a_t *stream_format_a);
 int write_avi_header_chunk(struct gwavi_t *gwavi);
-int write_index(FILE *out, int count, int *offsets);
+int write_index(FILE *out, int count, unsigned int *offsets);
 
 #endif /* ndef GWAVI_UTILS_H */
 

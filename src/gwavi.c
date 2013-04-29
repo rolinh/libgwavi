@@ -67,8 +67,8 @@
  * file. If an error occured, NULL is returned.
  */
 struct gwavi_t *
-gwavi_open(char *filename, int width, int height, char *fourcc,
-	   int fps, struct gwavi_audio_t *audio)
+gwavi_open(char *filename, unsigned int width, unsigned int height,
+	   char *fourcc, unsigned int fps, struct gwavi_audio_t *audio)
 {
 	struct gwavi_t *gwavi;
 	FILE *out;
@@ -118,10 +118,10 @@ gwavi_open(char *filename, int width, int height, char *fourcc,
 	gwavi->stream_format_v.num_planes = 1;
 	gwavi->stream_format_v.bits_per_pixel = 24;
 	gwavi->stream_format_v.compression_type =
-		((int)fourcc[3] << 24) +
-		((int)fourcc[2] << 16) +
-		((int)fourcc[1] << 8) +
-		((int)fourcc[0]);
+		((unsigned int)fourcc[3] << 24) +
+		((unsigned int)fourcc[2] << 16) +
+		((unsigned int)fourcc[1] << 8) +
+		((unsigned int)fourcc[0]);
 	gwavi->stream_format_v.image_size = width * height * 3;
 	gwavi->stream_format_v.colors_used = 0;
 	gwavi->stream_format_v.colors_important = 0;
@@ -140,7 +140,8 @@ gwavi_open(char *filename, int width, int height, char *fourcc,
 		gwavi->stream_header_a.data_rate = audio->samples_per_second;
 		gwavi->stream_header_a.buffer_size =
 			audio->channels * (audio->bits / 8) * audio->samples_per_second;
-		gwavi->stream_header_a.quality = -1;
+		/* when set to -1, drivers use default quality value */
+		gwavi->stream_header_a.audio_quality = -1;
 		gwavi->stream_header_a.sample_size =
 			(audio->bits / 8) * audio->channels;
 
@@ -229,14 +230,14 @@ gwavi_add_frame(struct gwavi_t *gwavi, unsigned char *buffer, size_t len)
 					(size_t)gwavi->offsets_len * sizeof(int));
 	}
 
-	gwavi->offsets[gwavi->offsets_ptr++] = (int)(len + maxi_pad);
+	gwavi->offsets[gwavi->offsets_ptr++] = (unsigned int)(len + maxi_pad);
 
 	if (write_chars_bin(gwavi->out, "00dc", 4) == -1) {
 		(void)fprintf(stderr, "gwavi_add_frame: write_chars_bin() "
 			      "failed\n");
 		return -1;
 	}
-	if (write_int(gwavi->out, (int)(len + maxi_pad)) == -1) {
+	if (write_int(gwavi->out, (unsigned int)(len + maxi_pad)) == -1) {
 		(void)fprintf(stderr, "gwavi_add_frame: write_int() failed\n");
 		return -1;
 	}
@@ -282,14 +283,15 @@ gwavi_add_audio(struct gwavi_t *gwavi, unsigned char *buffer, size_t len)
 					(size_t)gwavi->offsets_len*sizeof(int));
 	}
 
-	gwavi->offsets[gwavi->offsets_ptr++] = (int)((len + maxi_pad) | 0x80000000);
+	gwavi->offsets[gwavi->offsets_ptr++] =
+		(unsigned int)((len + maxi_pad) | 0x80000000);
 
 	if (write_chars_bin(gwavi->out,"01wb",4) == -1) {
 		(void)fprintf(stderr, "gwavi_add_audio: write_chars_bin() "
 			      "failed\n");
 		return -1;
 	}
-	if (write_int(gwavi->out,(int)(len + maxi_pad)) == -1) {
+	if (write_int(gwavi->out,(unsigned int)(len + maxi_pad)) == -1) {
 		(void)fprintf(stderr, "gwavi_add_audio: write_int() failed\n");
 		return -1;
 	}
@@ -305,7 +307,7 @@ gwavi_add_audio(struct gwavi_t *gwavi, unsigned char *buffer, size_t len)
 			return -1;
 		}
 
-	gwavi->stream_header_a.data_length += (int)(len + maxi_pad);
+	gwavi->stream_header_a.data_length += (unsigned int)(len + maxi_pad);
 
 	return 0;
 }
@@ -328,7 +330,7 @@ gwavi_close(struct gwavi_t *gwavi)
 		goto ftell_failed;
 	if (fseek(gwavi->out, gwavi->marker, SEEK_SET) == -1)
 		goto fseek_failed;
-	if (write_int(gwavi->out, (int)(t - gwavi->marker - 4)) == -1) {
+	if (write_int(gwavi->out, (unsigned int)(t - gwavi->marker - 4)) == -1) {
 		(void)fprintf(stderr, "gwavi_close: write_int() failed\n");
 		return -1;
 	}
@@ -361,7 +363,7 @@ gwavi_close(struct gwavi_t *gwavi)
 		goto ftell_failed;
 	if (fseek(gwavi->out, 4, SEEK_SET) == -1)
 		goto fseek_failed;
-	if (write_int(gwavi->out, (int)(t - 8)) == -1) {
+	if (write_int(gwavi->out, (unsigned int)(t - 8)) == -1) {
 		(void)fprintf(stderr, "gwavi_close: write_int() failed\n");
 		return -1;
 	}
@@ -398,10 +400,10 @@ fseek_failed:
  * @param fps Number of frames per second of your video.
  */
 void
-gwavi_set_framerate(struct gwavi_t *gwavi, int fps)
+gwavi_set_framerate(struct gwavi_t *gwavi, unsigned int fps)
 {
 	gwavi->stream_header_v.data_rate = fps;
-	gwavi->avi_header.time_delay = (int)(1000000.0 / fps);
+	gwavi->avi_header.time_delay = (10000000 / fps);
 }
 
 /**
@@ -418,10 +420,10 @@ gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc)
 {
 	memcpy(gwavi->stream_header_v.codec, fourcc, 4);
 	gwavi->stream_format_v.compression_type =
-		((int)fourcc[3] << 24) +
-		((int)fourcc[2] << 16) +
-		((int)fourcc[1] << 8) +
-		((int)fourcc[0]);
+		((unsigned int)fourcc[3] << 24) +
+		((unsigned int)fourcc[2] << 16) +
+		((unsigned int)fourcc[1] << 8) +
+		((unsigned int)fourcc[0]);
 }
 
 /**
@@ -435,9 +437,9 @@ gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc)
  * @param height Height of a frame.
  */
 void
-gwavi_set_size(struct gwavi_t *gwavi, int width, int height)
+gwavi_set_size(struct gwavi_t *gwavi, unsigned int width, unsigned int height)
 {
-	int size = (width * height * 3);
+	unsigned int size = (width * height * 3);
 
 	gwavi->avi_header.data_rate = size;
 	gwavi->avi_header.width = width;
