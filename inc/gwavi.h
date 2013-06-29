@@ -127,7 +127,7 @@ struct gwavi_audio_t
 };
 
 
-/* Main ibrary functions */
+/* Main library functions */
 struct gwavi_t *gwavi_open(char *filename, unsigned int width,
 			   unsigned int height, char *fourcc, unsigned int fps,
 			   struct gwavi_audio_t *audio);
