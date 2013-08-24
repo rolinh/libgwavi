@@ -38,16 +38,16 @@
 /* structures */
 struct gwavi_header_t
 {
-	unsigned int time_delay;
-	unsigned int data_rate;
+	unsigned int time_delay;	/* dwMicroSecPerFrame */
+	unsigned int data_rate;		/* dwMaxBytesPerSec */
 	unsigned int reserved;
-	unsigned int flags;
-	unsigned int number_of_frames;
-	unsigned int initial_frames;
-	unsigned int data_streams;
-	unsigned int buffer_size;
-	unsigned int width;
-	unsigned int height;
+	unsigned int flags;		/* dwFlags */
+	unsigned int number_of_frames;	/* dwTotalFrames */
+	unsigned int initial_frames;	/* dwInitialFrames */
+	unsigned int data_streams;	/* dwStreams */
+	unsigned int buffer_size;	/* dwSuggestedBufferSize */
+	unsigned int width;		/* dwWidth */
+	unsigned int height;		/* dwHeight */
 	unsigned int time_scale;
 	unsigned int playback_data_rate;
 	unsigned int starting_time;
@@ -56,23 +56,23 @@ struct gwavi_header_t
 
 struct gwavi_stream_header_t
 {
-	char data_type[5];
-	char codec[5];
-	unsigned int flags;
+	char data_type[5];	    /* fccType */
+	char codec[5];		    /* fccHandler */
+	unsigned int flags;	    /* dwFlags */
 	unsigned int priority;
-	unsigned int initial_frames;
-	unsigned int time_scale;
-	unsigned int data_rate;
-	unsigned int start_time;
-	unsigned int data_length;
-	unsigned int buffer_size;
-	unsigned int video_quality;
+	unsigned int initial_frames;/* dwInitialFrames */
+	unsigned int time_scale;    /* dwScale */
+	unsigned int data_rate;	    /* dwRate */
+	unsigned int start_time;    /* dwStart */
+	unsigned int data_length;   /* dwLength */
+	unsigned int buffer_size;   /* dwSuggestedBufferSize */
+	unsigned int video_quality; /* dwQuality */
 	/**
 	 * Value between 0-10000. If set to -1, drivers use default quality
 	 * value.
 	 */
 	int audio_quality;
-	unsigned int sample_size;
+	unsigned int sample_size;   /* dwSampleSize */
 };
 
 struct gwavi_stream_format_v_t
@@ -127,7 +127,7 @@ struct gwavi_audio_t
 };
 
 
-/* Main library functions */
+/* Main ibrary functions */
 struct gwavi_t *gwavi_open(char *filename, unsigned int width,
 			   unsigned int height, char *fourcc, unsigned int fps,
 			   struct gwavi_audio_t *audio);
@@ -143,7 +143,8 @@ int gwavi_close(struct gwavi_t *gwavi);
  */
 void gwavi_set_framerate(struct gwavi_t *gwavi, unsigned int fps);
 void gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc);
-void gwavi_set_size(struct gwavi_t *gwavi, unsigned int width, unsigned int height);
+void gwavi_set_size(struct gwavi_t *gwavi, unsigned int width,
+		    unsigned int height);
 
 #endif /* ndef H_GWAVI */
 
