@@ -65,8 +65,10 @@ write_avi_header(FILE *out, struct gwavi_header_t *avi_header)
 		goto write_int_failed;
 	if (write_int(out, avi_header->reserved) == -1)
 		goto write_int_failed;
+	/* dwFlags */
 	if (write_int(out, avi_header->flags) == -1)
 		goto write_int_failed;
+	/* dwTotalFrames */
 	if (write_int(out, avi_header->number_of_frames) == -1)
 		goto write_int_failed;
 	if (write_int(out, avi_header->initial_frames) == -1)
@@ -182,6 +184,7 @@ int
 write_stream_format_v(FILE *out, struct gwavi_stream_format_v_t *stream_format_v)
 {
 	long marker,t;
+	unsigned int i;
 
 	if (write_chars_bin(out, "strf", 4) == -1) {
 		(void)fprintf(stderr, "write_stream_format_v: write_chars_bin()"
@@ -225,14 +228,14 @@ write_stream_format_v(FILE *out, struct gwavi_stream_format_v_t *stream_format_v
 		goto write_int_failed;
 
 	if (stream_format_v->colors_used != 0)
-		for (t=0; t<stream_format_v->colors_used; t++) {
-			if (fputc(stream_format_v->palette[t] & 255, out)
+		for (i = 0; i < stream_format_v->colors_used; i++) {
+			if (fputc(stream_format_v->palette[i] & 255, out)
 					== EOF)
 				goto fputc_failed;
-			if (fputc((stream_format_v->palette[t] >> 8) & 255, out)
+			if (fputc((stream_format_v->palette[i] >> 8) & 255, out)
 					== EOF)
 				goto fputc_failed;
-			if (fputc((stream_format_v->palette[t] >> 16) & 255, out)
+			if (fputc((stream_format_v->palette[i] >> 16) & 255, out)
 					== EOF)
 				goto fputc_failed;
 			if (fputc(0, out) == EOF)
