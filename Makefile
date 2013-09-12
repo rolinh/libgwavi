@@ -25,6 +25,7 @@ INC = inc
 LIB = lib
 OBJ = obj
 SRC = src
+TEST= test
 
 SRCS = ${SRC}/avi-utils.c \
 	   ${SRC}/gwavi.c \
@@ -53,6 +54,9 @@ examples: ${NAME}
 
 doc: ${OBJS}
 	${DOXYGEN} ${DOC}/Doxyfile
+
+test: ${NAME}
+	${MAKE} -C ${TEST}
 
 clean:
 	${RM} -f ${OBJ}/*.o

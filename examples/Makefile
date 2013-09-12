@@ -1,5 +1,4 @@
 CC ?= gcc
-DOXYGEN ?= doxygen
 MAKE ?= make
 rm ?= rm
 

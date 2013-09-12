@@ -5,3 +5,4 @@ doc/html
 doc/latex
 doc/man
 lib/*
+test/test
