@@ -141,9 +141,9 @@ int gwavi_close(struct gwavi_t *gwavi);
  * Note: AVI can only have a single frame rate, codec, size for the whole file
  * so this affects anything recorded before these functions are called.
  */
-void gwavi_set_framerate(struct gwavi_t *gwavi, unsigned int fps);
-void gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc);
-void gwavi_set_size(struct gwavi_t *gwavi, unsigned int width,
+int gwavi_set_framerate(struct gwavi_t *gwavi, unsigned int fps);
+int gwavi_set_codec(struct gwavi_t *gwavi, char *fourcc);
+int gwavi_set_size(struct gwavi_t *gwavi, unsigned int width,
 		    unsigned int height);
 
 #endif /* ndef H_GWAVI */

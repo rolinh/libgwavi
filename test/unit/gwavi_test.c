@@ -21,6 +21,9 @@ main(void)
     sput_enter_suite("test gwavi_close");
     sput_run_test(gwavi_close_test);
 
+    sput_enter_suite("test gwavi_set_framerate");
+    sput_run_test(gwavi_set_framerate_test);
+
     sput_enter_suite("test check fourcc");
     sput_run_test(check_fourcc_test);
 
@@ -96,6 +99,20 @@ gwavi_close_test(void)
 	sput_fail_unless(gwavi_close(NULL) == -1, "NULL gwavi parameter");
 
 }
+
+static void
+gwavi_set_framerate_test(void)
+{
+	struct gwavi_t *gwavi;
+
+	gwavi = gwavi_open("/tmp/foo.avi", 1920, 1080, "H264", 30, NULL);
+
+	sput_fail_unless(gwavi_set_framerate(gwavi, 30) == 0, "valid call to "
+			 "gwavi_set_framerate");
+	sput_fail_unless(gwavi_set_framerate(NULL, 30) == -1, "NULL gwavi "
+			 "parameter");
+}
+
 
 /* helpers functions */
 static void

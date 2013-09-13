@@ -425,12 +425,20 @@ fseek_failed:
  *
  * @param gwavi Main gwavi structure initialized with gwavi_open()-
  * @param fps Number of frames per second of your video.
+ *
+ * @return 0 on success, -1 on error.
  */
-void
+int
 gwavi_set_framerate(struct gwavi_t *gwavi, unsigned int fps)
 {
+	if (!gwavi) {
+		(void)fputs("gwavi argument cannot be NULL", stderr);
+		return -1;
+	}
 	gwavi->stream_header_v.data_rate = fps;
 	gwavi->avi_header.time_delay = (10000000 / fps);
+
+	return 0;
 }
 
 /**
@@ -441,16 +449,28 @@ gwavi_set_framerate(struct gwavi_t *gwavi, unsigned int fps)
  *
  * @param gwavi Main gwavi structure initialized with gwavi_open()-
  * @param fourcc FourCC representing the codec of the video encoded stream. a
+ *
+ * @return 0 on success, -1 on error.
  */
-void
-gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc)
+int
+gwavi_set_codec(struct gwavi_t *gwavi, char *fourcc)
 {
+	if (!gwavi) {
+		(void)fputs("gwavi argument cannot be NULL", stderr);
+		return -1;
+	}
+	if (check_fourcc(fourcc) != 0)
+		(void)fprintf(stderr, "WARNING: given fourcc does not seem to "
+			      "be valid: %s\n", fourcc);
+
 	memcpy(gwavi->stream_header_v.codec, fourcc, 4);
 	gwavi->stream_format_v.compression_type =
 		((unsigned int)fourcc[3] << 24) +
 		((unsigned int)fourcc[2] << 16) +
 		((unsigned int)fourcc[1] << 8) +
 		((unsigned int)fourcc[0]);
+
+	return 0;
 }
 
 /**
@@ -462,11 +482,18 @@ gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc)
  * @param gwavi Main gwavi structure initialized with gwavi_open()-
  * @param width Width of a frame.
  * @param height Height of a frame.
+ *
+ * @return 0 on success, -1 on error.
  */
-void
+int
 gwavi_set_size(struct gwavi_t *gwavi, unsigned int width, unsigned int height)
 {
 	unsigned int size = (width * height * 3);
+
+	if (!gwavi) {
+		(void)fputs("gwavi argument cannot be NULL", stderr);
+		return -1;
+	}
 
 	gwavi->avi_header.data_rate = size;
 	gwavi->avi_header.width = width;
@@ -476,5 +503,7 @@ gwavi_set_size(struct gwavi_t *gwavi, unsigned int width, unsigned int height)
 	gwavi->stream_format_v.width = width;
 	gwavi->stream_format_v.height = height;
 	gwavi->stream_format_v.image_size = size;
+
+	return 0;
 }
 
