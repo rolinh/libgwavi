@@ -286,6 +286,12 @@ gwavi_add_audio(struct gwavi_t *gwavi, unsigned char *buffer, size_t len)
 	size_t maxi_pad;  /* in case audio bleeds over the 4 byte boundary  */
 	size_t t;
 
+	if (!gwavi || !buffer) {
+		(void)fputs("gwavi and/or buffer argument cannot be NULL",
+			    stderr);
+		return -1;
+	}
+
 	gwavi->offset_count++;
 
 	maxi_pad = len % 4;

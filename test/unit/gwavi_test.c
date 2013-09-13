@@ -15,6 +15,9 @@ main(void)
     sput_enter_suite("test gwavi_add_frame");
     sput_run_test(gwavi_add_frame_test);
 
+    sput_enter_suite("test gwavi_add_audio");
+    sput_run_test(gwavi_add_audio_test);
+
     sput_enter_suite("test check fourcc");
     sput_run_test(check_fourcc_test);
 
@@ -56,6 +59,28 @@ gwavi_add_frame_test(void)
 			"NULL buffer parameter");
 	sput_fail_unless(gwavi_add_frame(gwavi, buffer, 0) == 0,
 			"buffer of size 0");
+}
+
+static void
+gwavi_add_audio_test(void)
+{
+	struct gwavi_t *gwavi;
+	struct gwavi_audio_t audio;
+	unsigned char *buffer;
+	size_t buffer_len = 8192;
+	size_t snd_buffer_len = 2048;
+	unsigned char snd_buffer[snd_buffer_len];
+
+	buffer = (unsigned char *)malloc(buffer_len);
+
+	gwavi = gwavi_open("/tmp/foo.avi", 1920, 1080, "H264", 30, &audio);
+
+	sput_fail_unless(gwavi_add_audio(gwavi, snd_buffer, snd_buffer_len) == 0,
+			 "valid call to gwavi_add_audio");
+	sput_fail_unless(gwavi_add_audio(NULL, snd_buffer, snd_buffer_len) == -1,
+			 "NULL gwavi parameter");
+	sput_fail_unless(gwavi_add_audio(gwavi, NULL, snd_buffer_len) == -1,
+			 "NULL gwavi parameter");
 }
 
 /* helpers functions */
