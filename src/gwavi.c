@@ -73,6 +73,9 @@ gwavi_open(char *filename, unsigned int width, unsigned int height,
 	struct gwavi_t *gwavi;
 	FILE *out;
 
+	if (check_fourcc(fourcc) != 0)
+		(void)fprintf(stderr, "WARNING: given fourcc does not seem to "
+			      "be valid: %s\n", fourcc);
 	if ((out = fopen(filename, "wb+")) == NULL) {
 		perror("gwavi_open: failed to open file for writing");
 		return NULL;

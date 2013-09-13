@@ -8,7 +8,7 @@ EXEC = test
 CFLAGS = -O2 -std=c89 -fPIC ${INCLUDES}
 LDFLAGS = -L${LIB} -lgwavi
 
-INCLUDES=-I${INC} -I${TEST_INC}
+INCLUDES=-I${INC} -I${TEST_INC} -I${SRC}
 
 # directories
 INC=../inc
