@@ -18,8 +18,7 @@ OBJ=obj
 TEST_INC=inc
 UNIT=unit
 
-UNITS = ${UNIT}/gwavi_test.c \
-		${UNIT}/test_helper.c
+UNITS = ${UNIT}/gwavi_test.c
 
 OBJS = ${UNITS:${UNIT}/%.c=${OBJ}/%.o}
 

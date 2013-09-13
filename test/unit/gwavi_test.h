@@ -5,7 +5,7 @@
  *
  */
 
-void gwavi_open_test(void);
+static void gwavi_open_test(void);
 
 
 #endif /* ndef H_GWAVI_TEST */
