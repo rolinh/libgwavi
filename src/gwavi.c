@@ -229,7 +229,7 @@ gwavi_add_frame(struct gwavi_t *gwavi, unsigned char *buffer, size_t len)
 	if (len < 256)
 		(void)fprintf(stderr, "WARNING: specified buffer len seems "
 			      "rather small: %d. Are you sure about this?\n",
-			      len);
+			      (int)len);
 
 	gwavi->offset_count++;
 	gwavi->stream_header_v.data_length++;
