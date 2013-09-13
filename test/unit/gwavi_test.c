@@ -12,6 +12,9 @@ main(void)
     sput_enter_suite("test gwavi_open");
     sput_run_test(gwavi_open_test);
 
+    sput_enter_suite("test gwavi_add_frame");
+    sput_run_test(gwavi_add_frame_test);
+
     sput_enter_suite("test check fourcc");
     sput_run_test(check_fourcc_test);
 
@@ -22,6 +25,7 @@ main(void)
 
 /* API functions */
 
+/* TODO: test audio */
 static void
 gwavi_open_test(void)
 {
@@ -31,6 +35,27 @@ gwavi_open_test(void)
 		                    NULL) == NULL, "no R/W permissions");
 	sput_fail_unless(gwavi_open("/tmp/sadfpoisadf/foo.avi", 12, 20, "H264",
 				   30, NULL) == NULL, "no such directory");
+}
+
+static void
+gwavi_add_frame_test(void)
+{
+	struct gwavi_t *gwavi;
+	unsigned char *buffer;
+	size_t buffer_len = 8192;
+
+	buffer = (unsigned char *)malloc(buffer_len);
+
+	gwavi = gwavi_open("/tmp/foo.avi", 1920, 1080, "H264", 30, NULL);
+
+	sput_fail_unless(gwavi_add_frame(gwavi, buffer, buffer_len) == 0,
+			 "valid call to gwavi_add_frame");
+	sput_fail_unless(gwavi_add_frame(NULL, buffer, buffer_len) == -1,
+			 "NULL gwavi structure");
+	sput_fail_unless(gwavi_add_frame(gwavi, NULL, buffer_len) == -1,
+			"NULL buffer parameter");
+	sput_fail_unless(gwavi_add_frame(gwavi, buffer, 0) == 0,
+			"buffer of size 0");
 }
 
 /* helpers functions */
