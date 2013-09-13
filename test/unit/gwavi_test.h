@@ -9,6 +9,7 @@
 static void gwavi_open_test(void);
 static void gwavi_add_frame_test(void);
 static void gwavi_add_audio_test(void);
+static void gwavi_close_test(void);
 
 /* helpers functions */
 static void check_fourcc_test(void);

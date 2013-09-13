@@ -18,6 +18,9 @@ main(void)
     sput_enter_suite("test gwavi_add_audio");
     sput_run_test(gwavi_add_audio_test);
 
+    sput_enter_suite("test gwavi_close");
+    sput_run_test(gwavi_close_test);
+
     sput_enter_suite("test check fourcc");
     sput_run_test(check_fourcc_test);
 
@@ -81,6 +84,17 @@ gwavi_add_audio_test(void)
 			 "NULL gwavi parameter");
 	sput_fail_unless(gwavi_add_audio(gwavi, NULL, snd_buffer_len) == -1,
 			 "NULL gwavi parameter");
+}
+
+static void
+gwavi_close_test(void)
+{
+	struct gwavi_t *gwavi;
+
+	gwavi = gwavi_open("/tmp/foo.avi", 1920, 1080, "H264", 30, NULL);
+	sput_fail_unless(gwavi_close(gwavi) == 0, "valid call to gwavi_close");
+	sput_fail_unless(gwavi_close(NULL) == -1, "NULL gwavi parameter");
+
 }
 
 /* helpers functions */

@@ -348,6 +348,11 @@ gwavi_close(struct gwavi_t *gwavi)
 {
 	long t;
 
+	if (!gwavi) {
+		(void)fputs("gwavi argument cannot be NULL", stderr);
+		return -1;
+	}
+
 	if ((t = ftell(gwavi->out)) == -1)
 		goto ftell_failed;
 	if (fseek(gwavi->out, gwavi->marker, SEEK_SET) == -1)
