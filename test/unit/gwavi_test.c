@@ -24,6 +24,12 @@ main(void)
     sput_enter_suite("test gwavi_set_framerate");
     sput_run_test(gwavi_set_framerate_test);
 
+    sput_enter_suite("test gwavi_set_codec");
+    sput_run_test(gwavi_set_codec_test);
+
+    sput_enter_suite("test gwavi_set_size");
+    sput_run_test(gwavi_set_size_test);
+
     sput_enter_suite("test check fourcc");
     sput_run_test(check_fourcc_test);
 
@@ -113,6 +119,33 @@ gwavi_set_framerate_test(void)
 			 "parameter");
 }
 
+static void
+gwavi_set_codec_test(void)
+{
+	struct gwavi_t *gwavi;
+
+	gwavi = gwavi_open("/tmp/foo.avi", 1920, 1080, "H264", 30, NULL);
+
+	sput_fail_unless(gwavi_set_codec(gwavi, "H264") == 0, "valid call to "
+			 "gwavi_set_codec");
+	sput_fail_unless(gwavi_set_codec(gwavi, "foobar") == 0, "valid call to "
+			 "gwavi_set_codec but weird fourcc");
+	sput_fail_unless(gwavi_set_codec(NULL, "H264") == -1, "NULL gwavi "
+			 "parameter");
+}
+
+static void
+gwavi_set_size_test(void)
+{
+	struct gwavi_t *gwavi;
+
+	gwavi = gwavi_open("/tmp/foo.avi", 1920, 1080, "H264", 30, NULL);
+
+	sput_fail_unless(gwavi_set_size(gwavi, 1280, 720) == 0, "valid call to "
+			 "gwavi_set_size");
+	sput_fail_unless(gwavi_set_size(NULL, 1280, 720) == -1, "NULL gwavi "
+			 "parameter");
+}
 
 /* helpers functions */
 static void

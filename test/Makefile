@@ -32,7 +32,7 @@ ${EXEC}: ${OBJS}
 	${CC} -o ${EXEC} ${OBJS} ${LDFLAGS} -Wl,-rpath=${LIB}
 
 clean:
-	${RM} -f ${OBJ}/*.o
+	${RM} ${OBJ}/*.o
 
 mrproper: clean
 	${RM} ${EXEC}
