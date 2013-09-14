@@ -39,13 +39,15 @@ main(void)
 }
 
 /* API functions */
-
-/* TODO: test audio */
 static void
 gwavi_open_test(void)
-{
+{	struct gwavi_audio_t audio;
+
 	sput_fail_unless(gwavi_open("/tmp/foo.avi", 1920, 1080, "H264", 30,
 				    NULL) != NULL, "valid call to gwavi_open");
+	sput_fail_unless(gwavi_open("/tmp/foo.avi", 1920, 1080, "H264", 30,
+				    &audio) != NULL, "valid call to gwavi_open "
+				    "with audio");
 	sput_fail_unless(gwavi_open("/root/nopermission", 12, 20, "H264", 30,
 		                    NULL) == NULL, "no R/W permissions");
 	sput_fail_unless(gwavi_open("/tmp/sadfpoisadf/foo.avi", 12, 20, "H264",
