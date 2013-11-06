@@ -63,9 +63,11 @@ test: ${NAME}
 clean:
 	${RM} -f ${OBJ}/*.o
 	${MAKE} -C ${EXAMPLES} clean
+	${MAKE} -C ${TEST} clean
 
 mrproper: clean
 	${RM} -rf ${LIB}/*.so* ${DOC}/html ${DOC}/latex ${DOC}/man
 	${MAKE} -C ${EXAMPLES} mrproper
+	${MAKE} -C ${TEST} mrproper
 
 .PHONY: all clean debug doc examples mrproper
