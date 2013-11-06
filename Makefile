@@ -1,6 +1,7 @@
 VERSION_MAJOR = 0
 VERSION_MINOR = 0
-VERSION = ${VERSION_MAJOR}.${VERSION_MINOR}
+VERSION_PATCH = 0
+VERSION = ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
 NAME = gwavi
 
 CC ?= gcc
@@ -38,6 +39,7 @@ OBJS = ${SRCS:${SRC}/%.c=${OBJ}/%.o}
 ${NAME}: ${OBJS}
 	${CC} ${CFLAGS} -shared -o ${LIB}/lib${NAME}.so.${VERSION} ${OBJS}
 	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so.${VERSION_MAJOR}
+	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so.${VERSION_MAJOR}.${VERSION_MINOR}
 	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so
 
 ${OBJS}: ${OBJ}/%.o : ${SRC}/%.c
