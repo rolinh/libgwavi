@@ -1,5 +1,3 @@
-# README
-
 # DISCLAIMER
 
 Even though you can already generate AVI files, this library has not reached a
@@ -7,17 +5,17 @@ final version yet and is still a work in progress. You've been warned... ;)
 
 # SYNOPSIS
 
-libgwavi is a fork of libkohn-avi. It is a tiny C library aimed at creating AVI
-files.
+`libgwavi` is a fork of `libkohn-avi`. It is a tiny C library aimed at creating
+AVI files.
 
 Original credits go to Michael Kohn, who released his library under the LGPL
 license. He, however, allowed me to release my forked version under the less
-restrictive 3-clause BSD license so... thanks to him!
+restrictive 3-clause BSD license so... Thanks to him!
 
 Anyway, why the fork you might ask? I used it in an application that needed the
-library to be reliable. So here is what has already changed from libkohn-avi:
+library to be reliable. So here is what has already changed from `libkohn-avi`:
 
-  * added function documentation through doxygen (use `make doc` to generate it)
+  * added library documentation
 
   * removed dead code
 
@@ -66,7 +64,7 @@ Please, note that error checking has been voluntarily omitted int the examples
 below for the sake of the clarification.
 
 So first, you should declare a `gwavi_t` structure and initialize it. You can
-optionnaly declare a `gwavi_audio_t` structure if you need to add an audio
+optionally declare a `gwavi_audio_t` structure if you need to add an audio
 channel to your AVI file.
 
     struct gwavi_t *gwavi;
@@ -93,5 +91,10 @@ calling the `gwavi_close()` function.
 
     gwavi_close(gwavi);
 
+# DOCUMENTATION
+
+The library documentation can be generated with `make doc` if you have
+`doxygen` installed. Otherwise, you can just visit
+http://doc.gw-computing.net/libgwavi.
 
 <!-- vim: set filetype=markdown textwidth=80 -->
