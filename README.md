@@ -19,9 +19,11 @@ library to be reliable. So here is what has already changed from libkohn-avi:
 
   * added function documentation through doxygen (use `make doc` to generate it)
 
-  * removed not useful code
+  * removed dead code
 
   * improved error checking
+
+  * added unit tests
 
 # BUILD
 
