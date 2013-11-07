@@ -1,5 +1,6 @@
 *.o
 *.swp
+.directory
 examples/demo
 doc/html
 doc/latex
