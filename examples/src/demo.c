@@ -37,13 +37,104 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+
 #include "gwavi.h"
 
-int
-main(int argc, char *argv[])
-{
-	(void)fprintf(stderr, "Not implemented yet\n");
+#define FILENAME_LEN 17
 
-	return EXIT_FAILURE;
+int
+main(void)
+{
+	struct gwavi_t *gwavi;		  /* declare main gwavi structure */
+	/*struct gwavi_audio_t audio;*/	  /* declare structure used for audio */
+	unsigned int width = 320;	  /* set video width */
+	unsigned int height = 240;	  /* set video height */
+	unsigned int fps = 3;		  /* set number of frames per second */
+	char *fourcc = "MJPG";		  /* set fourcc used */
+	char *avi_out = "example.avi";    /* set out file name */
+
+	struct stat frame_stat;
+	char filename[FILENAME_LEN];
+	unsigned char *buffer;
+	ssize_t r;
+	size_t count, len, buffer_len = 0;
+	int i, fd, ret;
+
+	/* TODO: add audio */
+	/* gwavi = gwavi_open(avi_out, width, height, fourcc, fps, &audio); */
+	gwavi = gwavi_open(avi_out, width, height, fourcc, fps, NULL);
+	if (!gwavi) {
+		(void)fprintf(stderr, "Call to gwavi_open() failed!\n");
+		return EXIT_FAILURE;
+	}
+
+	/* read 15 jpg images that will act as frames */
+	for (i = 1; i < 16; i++) {
+		ret = sprintf(filename, "video-src/%02d.jpg", i);
+		if (ret != FILENAME_LEN - 1) {
+			if (ret < 0) {
+				(void)fprintf(stderr, "An error occured during "
+				    " snprintf call\n");
+			} else {
+				(void)fprintf(stderr, "Name of file to read was"
+				    " truncated during sprintf call\n");
+			}
+			return EXIT_FAILURE;
+		}
+
+		fd = open(filename, O_RDONLY);
+		if (fd == -1) {
+			(void)fprintf(stderr, "Cannot open %s for reading\n",
+			    filename);
+			perror(" ");
+			return EXIT_FAILURE;
+		}
+
+		if (fstat(fd, &frame_stat) == -1) {
+			(void)fprintf(stderr, "Could not stat frame\n");
+			perror(" ");
+			return EXIT_FAILURE;
+		}
+		/* FIXME */
+		len = frame_stat.st_size;
+		if (len > buffer_len) {
+			if (buffer_len > 0)
+				free(buffer);
+			buffer_len = len;
+			buffer = malloc(buffer_len);
+		}
+		count = 0;
+		while (count < len) {
+			r = read(fd, buffer + count, len - count);
+			if (r < 0) {
+				(void)fprintf(stderr, "Failed to read from "
+				    "buffer\n");
+				perror(" ");
+				return EXIT_FAILURE;
+			}
+			count += (size_t)r;
+		}
+
+		if (close(fd) == -1) {
+			(void)fprintf(stderr, "Cannot close file descriptor\n");
+			perror(" ");
+			return EXIT_FAILURE;
+		}
+
+		if (gwavi_add_frame(gwavi, buffer, len) == -1) {
+			(void)fprintf(stderr, "Cannot add frame to video\n");
+			return EXIT_FAILURE;
+		}
+	}
+
+	if (gwavi_close(gwavi) == -1) {
+		(void)fprintf(stderr, "Call to gwavi_close() failed!\n");
+		return EXIT_FAILURE;
+	}
+
+	return EXIT_SUCCESS;
 }
 

@@ -2,6 +2,7 @@
 *.swp
 .directory
 examples/demo
+examples/example.avi
 doc/html
 doc/latex
 doc/man
