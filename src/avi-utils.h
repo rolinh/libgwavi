@@ -34,6 +34,8 @@
 #define H_GWAVI_UTILS
 
 #include "gwavi.h"
+#include "gwavi_private.h"
+
 /*
  * Utility functions for gwavi library.
  */
