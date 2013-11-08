@@ -52,6 +52,8 @@ gwavi_open_test(void)
 		                    NULL) == NULL, "no R/W permissions");
 	sput_fail_unless(gwavi_open("/tmp/sadfpoisadf/foo.avi", 12, 20, "H264",
 				   30, NULL) == NULL, "no such directory");
+	sput_fail_unless(gwavi_open("/tmp/foo.avi", 1920, 1080, "H264", 0, NULL)
+			    == NULL, "fps == 0");
 }
 
 static void

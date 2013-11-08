@@ -59,7 +59,7 @@
  * @param fourcc FourCC representing the codec of the video encoded stream. a
  * FourCC is a sequence of four chars used to uniquely identify data formats.
  * For more information, you can visit www.fourcc.org.
- * @param fps Number of frames per second of your video.
+ * @param fps Number of frames per second of your video. It needs to be > 0.
  * @param audio This parameter is optionnal. It is used for the audio track. If
  * you do not want to add an audio track to your AVI file, simply pass NULL for
  * this argument.
@@ -77,6 +77,8 @@ gwavi_open(char *filename, unsigned int width, unsigned int height,
 	if (check_fourcc(fourcc) != 0)
 		(void)fprintf(stderr, "WARNING: given fourcc does not seem to "
 			      "be valid: %s\n", fourcc);
+	if (fps < 1)
+		return NULL;
 	if ((out = fopen(filename, "wb+")) == NULL) {
 		perror("gwavi_open: failed to open file for writing");
 		return NULL;
