@@ -35,7 +35,6 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 
 int
 write_int(FILE *out, unsigned int n)
