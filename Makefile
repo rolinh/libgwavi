@@ -9,6 +9,7 @@ DOXYGEN ?= doxygen
 LN ?= ln
 MAKE ?= make
 rm ?= rm
+cp ?= cp
 
 CFLAGS = -O3 -std=c89 -fPIC ${INCLUDES}
 CFDEBUG = -O0 -g3 -pedantic -Wall -Wextra -Wconversion -Wstrict-prototypes \
@@ -46,6 +47,10 @@ ${OBJS}: ${OBJ}/%.o : ${SRC}/%.c
 	${CC} ${CFLAGS} -o $@ -c $<
 
 all: ${NAME} examples doc
+
+install: all
+	cp lib/libgwavi* /usr/local/lib
+	cp inc/*.h /usr/local/include
 
 debug: ${NAME}
 
