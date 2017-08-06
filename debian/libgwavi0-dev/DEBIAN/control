@@ -1,0 +1,14 @@
+Package: libgwavi0-dev
+Source: libgwavi0
+Version: 0.0.0-1+nmu4
+Architecture: amd64
+Maintainer: Folkert van Heusden <mail@vanheusden.com>
+Installed-Size: 46
+Depends: libc6 (>= 2.4)
+Section: graphics
+Priority: optional
+Homepage: https://projects.gw-computing.net/projects/libgwavi
+Description: libgwavi is a tiny C library aimed at creating
+ AVI files. These files can be video files with or without
+ audio. It does not provide compression, it only helps
+ producing a container (the AVI file).

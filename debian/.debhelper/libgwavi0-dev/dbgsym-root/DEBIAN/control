@@ -1,0 +1,13 @@
+Package: libgwavi0-dev-dbgsym
+Package-Type: ddeb
+Source: libgwavi0
+Version: 0.0.0-1+nmu4
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Folkert van Heusden <mail@vanheusden.com>
+Installed-Size: 44
+Depends: libgwavi0-dev (= 0.0.0-1+nmu4)
+Section: debug
+Priority: optional
+Description: debug symbols for libgwavi0-dev
+Build-Ids: b3ceb55ac0e4a1a17263205cba74f5643a794400
