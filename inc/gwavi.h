@@ -33,13 +33,15 @@
 #ifndef H_GWAVI
 #define H_GWAVI
 
+#include <stddef.h> /* for size_t */
+
 /* structures */
 struct gwavi_t;
 struct gwavi_audio_t;
 
 /* Main ibrary functions */
-struct gwavi_t *gwavi_open(char *filename, unsigned int width,
-			   unsigned int height, char *fourcc, unsigned int fps,
+struct gwavi_t *gwavi_open(const char *filename, unsigned int width,
+			   unsigned int height, const char *fourcc, unsigned int fps,
 			   struct gwavi_audio_t *audio);
 int gwavi_add_frame(struct gwavi_t *gwavi, unsigned char *buffer, size_t len);
 int gwavi_add_audio(struct gwavi_t *gwavi, unsigned char *buffer, size_t len);
@@ -52,7 +54,7 @@ int gwavi_close(struct gwavi_t *gwavi);
  * so this affects anything recorded before these functions are called.
  */
 int gwavi_set_framerate(struct gwavi_t *gwavi, unsigned int fps);
-int gwavi_set_codec(struct gwavi_t *gwavi, char *fourcc);
+int gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc);
 int gwavi_set_size(struct gwavi_t *gwavi, unsigned int width,
 		    unsigned int height);
 

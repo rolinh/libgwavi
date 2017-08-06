@@ -69,8 +69,8 @@
  * file. If an error occured, NULL is returned.
  */
 struct gwavi_t *
-gwavi_open(char *filename, unsigned int width, unsigned int height,
-	   char *fourcc, unsigned int fps, struct gwavi_audio_t *audio)
+gwavi_open(const char *filename, unsigned int width, unsigned int height,
+	   const char *fourcc, unsigned int fps, struct gwavi_audio_t *audio)
 {
 	struct gwavi_t *gwavi;
 	FILE *out;
@@ -85,7 +85,7 @@ gwavi_open(char *filename, unsigned int width, unsigned int height,
 		return NULL;
 	}
 
-	if ((gwavi = malloc(sizeof(struct gwavi_t))) == NULL) {
+	if ((gwavi = (struct gwavi_t *)malloc(sizeof(struct gwavi_t))) == NULL) {
 		(void)fprintf(stderr, "gwavi_open: could not allocate memoryi "
 			      "for gwavi structure\n");
 		return NULL;
@@ -193,7 +193,7 @@ gwavi_open(char *filename, unsigned int width, unsigned int height,
 		goto write_chars_bin_failed;
 
 	gwavi->offsets_len = 1024;
-	if ((gwavi->offsets = malloc((size_t)gwavi->offsets_len *
+	if ((gwavi->offsets = (unsigned int *)malloc((size_t)gwavi->offsets_len *
 				      sizeof(unsigned int)))
 			== NULL) {
 		(void)fprintf(stderr, "gwavi_info: could not allocate memory "
@@ -244,7 +244,7 @@ gwavi_add_frame(struct gwavi_t *gwavi, unsigned char *buffer, size_t len)
 
 	if (gwavi->offset_count >= gwavi->offsets_len) {
 		gwavi->offsets_len += 1024;
-		gwavi->offsets = realloc(gwavi->offsets,
+		gwavi->offsets = (unsigned int *)realloc(gwavi->offsets,
 					(size_t)gwavi->offsets_len *
 					sizeof(unsigned int));
 	}
@@ -304,7 +304,7 @@ gwavi_add_audio(struct gwavi_t *gwavi, unsigned char *buffer, size_t len)
 
 	if (gwavi->offset_count >= gwavi->offsets_len) {
 		gwavi->offsets_len += 1024;
-		gwavi->offsets = realloc(gwavi->offsets,
+		gwavi->offsets = (unsigned int *)realloc(gwavi->offsets,
 					(size_t)gwavi->offsets_len *
 					sizeof(unsigned int));
 	}
@@ -457,7 +457,7 @@ gwavi_set_framerate(struct gwavi_t *gwavi, unsigned int fps)
  * @return 0 on success, -1 on error.
  */
 int
-gwavi_set_codec(struct gwavi_t *gwavi, char *fourcc)
+gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc)
 {
 	if (!gwavi) {
 		(void)fputs("gwavi argument cannot be NULL", stderr);

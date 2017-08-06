@@ -496,7 +496,7 @@ write_int_failed:
  * Return 0 if fourcc is valid, 1 non-valid or -1 in case of errors.
  */
 int
-check_fourcc(char *fourcc)
+check_fourcc(const char *fourcc)
 {
 	int ret = 0;
 	/* list of fourccs from http://fourcc.org/codecs.php */

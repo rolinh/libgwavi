@@ -50,7 +50,7 @@ int write_stream_format_a(FILE *out,
 			  struct gwavi_stream_format_a_t *stream_format_a);
 int write_avi_header_chunk(struct gwavi_t *gwavi);
 int write_index(FILE *out, int count, unsigned int *offsets);
-int check_fourcc(char *fourcc);
+int check_fourcc(const char *fourcc);
 
 #endif /* ndef GWAVI_UTILS_H */
 
