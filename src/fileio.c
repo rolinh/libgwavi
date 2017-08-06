@@ -63,7 +63,7 @@ write_short(FILE *out, unsigned int n)
 }
 
 int
-write_chars(FILE *out, char *s)
+write_chars(FILE *out, const char *s)
 {
 	int t = 0;
 
@@ -75,7 +75,7 @@ write_chars(FILE *out, char *s)
 }
 
 int
-write_chars_bin(FILE *out, char *s, int count)
+write_chars_bin(FILE *out, const char *s, int count)
 {
 	int t;
 
