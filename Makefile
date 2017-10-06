@@ -10,7 +10,7 @@ LN ?= ln
 MAKE ?= make
 rm ?= rm
 
-CFLAGS = -O3 -std=c89 -fPIC ${INCLUDES}
+CFLAGS = -O3 -std=c89 -fPIC ${INCLUDES} -D_FILE_OFFSET_BITS=64
 CFDEBUG = -O0 -g3 -pedantic -Wall -Wextra -Wconversion -Wstrict-prototypes \
 		  -Wcast-qual -Wcast-align -Wshadow -Wredundant-decls -Wundef \
 		  -Wfloat-equal -Wmissing-include-dirs -Wswitch-default -Wswitch-enum \
