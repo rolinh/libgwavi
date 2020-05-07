@@ -11,7 +11,7 @@ MAKE ?= make
 rm ?= rm
 cp ?= cp
 
-CFLAGS = -O3 -std=c89 -fPIC ${INCLUDES} -D_FILE_OFFSET_BITS=64
+CFLAGS = -O3 -std=c89 -ggdb3 -fPIC ${INCLUDES} -D_FILE_OFFSET_BITS=64
 CFDEBUG = -O0 -g3 -pedantic -Wall -Wextra -Wconversion -Wstrict-prototypes \
 		  -Wcast-qual -Wcast-align -Wshadow -Wredundant-decls -Wundef \
 		  -Wfloat-equal -Wmissing-include-dirs -Wswitch-default -Wswitch-enum \
@@ -38,7 +38,7 @@ OBJS = ${SRCS:${SRC}/%.c=${OBJ}/%.o}
 .PATH: ${SRC}
 
 ${NAME}: ${OBJS}
-	${CC} ${CFLAGS} -shared -o ${LIB}/lib${NAME}.so.${VERSION} ${OBJS}
+	${CC} ${CFLAGS} -Wl,-soname,lib${NAME}.so.${VERSION_MAJOR} -shared -o ${LIB}/lib${NAME}.so.${VERSION} ${OBJS}
 	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so.${VERSION_MAJOR}
 	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so.${VERSION_MAJOR}.${VERSION_MINOR}
 	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so
@@ -51,7 +51,8 @@ all: ${NAME} examples doc
 install: all
 	rm -rf ${DESTDIR}${PREFIX}/usr/lib ${DESTDIR}${PREFIX}/usr/include
 	mkdir -p ${DESTDIR}${PREFIX}/usr/lib ${DESTDIR}${PREFIX}/usr/include
-	install -Dm644 lib/libgwavi* ${DESTDIR}${PREFIX}/usr/lib
+	cp -a lib/libgwavi* ${DESTDIR}${PREFIX}/usr/lib
+	chmod 644 ${DESTDIR}${PREFIX}/usr/lib/libgwavi*
 	install -Dm644 inc/*.h ${DESTDIR}${PREFIX}/usr/include
 
 debug: ${NAME}
@@ -80,6 +81,7 @@ mrproper: clean
 package: clean
 	mkdir libgwavi-$(VERSION)
 	cp -a AUTHORS.md debian doc examples inc lib LICENSE Makefile obj README.md src test libgwavi-$(VERSION)
+	rm -rf libgwavi-$(VERSION)/doc/html
 	tar czf ../libgwavi_$(VERSION).orig.tar.gz libgwavi-$(VERSION)
 	rm -rf libgwavi-$(VERSION)
 

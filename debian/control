@@ -10,6 +10,6 @@ Package: libgwavi-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: libgwavi is a tiny C library aimed at creating
-  AVI files. These files can be video files with or without
-  audio. It does not provide compression, it only helps
-  producing a container (the AVI file).
+ AVI files. These files can be video files with or without
+ audio. It does not provide compression, it only helps
+ producing a container (the AVI file).

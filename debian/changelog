@@ -1,19 +1,6 @@
-libgwavi (0.0.0-3) UNRELEASED; urgency=medium
+libgwavi (0.0.0-0+nmu0) buster; urgency=low
 
   * Closes: #959980
-
- -- folkert <folkert@belle.intranet.vanheusden.com>  Thu, 07 May 2020 23:35:50 +0200
-
-libgwavi (0.0.0-2) UNRELEASED; urgency=medium
-
-  * Bump debhelper dependency to >= 9, since that's what is used in
-    debian/compat.
-  * Bump debhelper from deprecated 9 to 10.
-
- -- folkert <folkert@belle.intranet.vanheusden.com>  Thu, 07 May 2020 23:19:50 +0200
-
-libgwavi (0.0.0-1) unstable; urgency=low
-
   * New upstream release.
 
- -- Folkert van Heusden <mail@vanheusden.com>  Sun, 26 Apr 2020 12:42:00 +0100
+ -- Folkert van Heusden <mail@vanheusden.com>  Thu, 07 May 2020 23:42:56 +0200
