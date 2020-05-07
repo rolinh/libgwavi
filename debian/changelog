@@ -2,6 +2,7 @@ libgwavi (0.0.0-2) UNRELEASED; urgency=medium
 
   * Bump debhelper dependency to >= 9, since that's what is used in
     debian/compat.
+  * Bump debhelper from deprecated 9 to 10.
 
  -- folkert <folkert@belle.intranet.vanheusden.com>  Thu, 07 May 2020 23:19:50 +0200
 
