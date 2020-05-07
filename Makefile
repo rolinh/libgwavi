@@ -49,8 +49,10 @@ ${OBJS}: ${OBJ}/%.o : ${SRC}/%.c
 all: ${NAME} examples doc
 
 install: all
-	cp lib/libgwavi* /usr/local/lib
-	cp inc/*.h /usr/local/include
+	rm -rf ${DESTDIR}${PREFIX}/usr/lib ${DESTDIR}${PREFIX}/usr/include
+	mkdir -p ${DESTDIR}${PREFIX}/usr/lib ${DESTDIR}${PREFIX}/usr/include
+	install -Dm644 lib/libgwavi* ${DESTDIR}${PREFIX}/usr/lib
+	install -Dm644 inc/*.h ${DESTDIR}${PREFIX}/usr/include
 
 debug: ${NAME}
 
@@ -74,5 +76,11 @@ mrproper: clean
 	${RM} -rf ${LIB}/*.so* ${DOC}/html ${DOC}/latex ${DOC}/man
 	${MAKE} -C ${EXAMPLES} mrproper
 	${MAKE} -C ${TEST} mrproper
+
+package: clean
+	mkdir libgwavi-$(VERSION)
+	cp -a AUTHORS.md debian doc examples inc lib LICENSE Makefile obj README.md src test libgwavi-$(VERSION)
+	tar czf ../libgwavi_$(VERSION).orig.tar.gz libgwavi-$(VERSION)
+	rm -rf libgwavi-$(VERSION)
 
 .PHONY: all clean debug doc examples mrproper
