@@ -3,7 +3,7 @@ Maintainer: Folkert van Heusden <mail@vanheusden.com>
 Section: graphics
 Priority: optional
 Standards-Version: 4.5.0
-Build-Depends: debhelper, doxygen
+Build-Depends: debhelper (>= 9~), doxygen
 Homepage: https://projects.gw-computing.net/projects/libgwavi
 
 Package: libgwavi-dev
