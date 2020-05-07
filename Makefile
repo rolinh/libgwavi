@@ -64,8 +64,8 @@ examples: ${NAME}
 doc: ${OBJS}
 	${DOXYGEN} ${DOC}/Doxyfile
 
-test: ${NAME}
-	${MAKE} -C ${TEST}
+#test: ${NAME}
+#	${MAKE} -C ${TEST}
 
 clean:
 	${RM} -f ${OBJ}/*.o
