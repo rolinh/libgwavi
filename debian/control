@@ -2,11 +2,14 @@ Source: libgwavi
 Maintainer: Folkert van Heusden <mail@vanheusden.com>
 Section: graphics
 Priority: optional
-Standards-Version: 3.9.5
+Standards-Version: 4.5.0
 Build-Depends: debhelper, doxygen
 Homepage: https://projects.gw-computing.net/projects/libgwavi
 
 Package: libgwavi-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: A library for generating .avi-files.
+Description: libgwavi is a tiny C library aimed at creating
+  AVI files. These files can be video files with or without
+  audio. It does not provide compression, it only helps
+  producing a container (the AVI file).
