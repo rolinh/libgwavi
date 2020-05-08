@@ -1,1 +1,7 @@
-Copyright 2013-2020 Robin Hahling <robin.hahling@gw-computing.net>
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: libgwavi
+Source: https://github.com/Rolinh/libgwavi
+
+Files: *
+Copyright: 2013-2020 Robin Hahling <robin.hahling@gw-computing.net>
+License: BSD-3-clause
