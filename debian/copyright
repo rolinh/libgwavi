@@ -7,6 +7,10 @@ Files: *
 Copyright: 2013-2020 Robin Hahling <robin.hahling@gw-computing.net>
 License: BSD-3-clause
 
+Files: debian/*
+Copyright: 2020 Folkert van Heusden <mail@vanheusden.com>
+License: BSD-3-clause
+
 License: BSD-3-clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
