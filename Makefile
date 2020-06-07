@@ -38,10 +38,10 @@ OBJS = ${SRCS:${SRC}/%.c=${OBJ}/%.o}
 .PATH: ${SRC}
 
 ${NAME}: ${OBJS}
-	${CC} ${CFLAGS} -Wl,-soname,lib${NAME}.so.${VERSION_MAJOR} -shared -o ${LIB}/lib${NAME}.so.${VERSION} ${OBJS}
-	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so.${VERSION_MAJOR}
-	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so.${VERSION_MAJOR}.${VERSION_MINOR}
-	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so
+	${CC} ${CFLAGS} -Wl,-soname,lib${NAME}0.so.${VERSION_MAJOR} -shared -o ${LIB}/lib${NAME}0.so.${VERSION} ${OBJS}
+	${LN} -sf lib${NAME}0.so.${VERSION} ${LIB}/lib${NAME}0.so.${VERSION_MAJOR}
+	${LN} -sf lib${NAME}0.so.${VERSION} ${LIB}/lib${NAME}0.so.${VERSION_MAJOR}.${VERSION_MINOR}
+	${LN} -sf lib${NAME}0.so.${VERSION} ${LIB}/lib${NAME}0.so
 
 ${OBJS}: ${OBJ}/%.o : ${SRC}/%.c
 	${CC} ${CFLAGS} -o $@ -c $<
