@@ -1,4 +1,4 @@
-Source: libgwavi
+Source: libgwavi0
 Maintainer: Folkert van Heusden <mail@vanheusden.com>
 Section: graphics
 Priority: optional
@@ -6,7 +6,7 @@ Standards-Version: 4.5.0
 Build-Depends: debhelper (>= 10~), doxygen
 Homepage: https://projects.gw-computing.net/projects/libgwavi
 
-Package: libgwavi-dev
+Package: libgwavi0-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: libgwavi is a tiny C library aimed at creating
