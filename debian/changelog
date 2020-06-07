@@ -1,4 +1,4 @@
-libgwavi (0.0.0-0+nmu2) unstable; urgency=low
+libgwavi0 (0.0.0-0+nmu2) unstable; urgency=low
 
   * Closes: #959980
   * New upstream release.
