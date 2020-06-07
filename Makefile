@@ -79,10 +79,10 @@ mrproper: clean
 	${MAKE} -C ${TEST} mrproper
 
 package: clean
-	mkdir libgwavi-$(VERSION)
-	cp -a AUTHORS.md debian doc examples inc lib LICENSE Makefile obj README.md src test libgwavi-$(VERSION)
-	rm -rf libgwavi-$(VERSION)/doc/html
-	tar czf ../libgwavi_$(VERSION).orig.tar.gz libgwavi-$(VERSION)
-	rm -rf libgwavi-$(VERSION)
+	mkdir libgwavi0-$(VERSION)
+	cp -a AUTHORS.md debian doc examples inc lib LICENSE Makefile obj README.md src test libgwavi0-$(VERSION)
+	rm -rf libgwavi0-$(VERSION)/doc/html
+	tar czf ../libgwavi0_$(VERSION).orig.tar.gz libgwavi0-$(VERSION)
+	rm -rf libgwavi0-$(VERSION)
 
 .PHONY: all clean debug doc examples mrproper
