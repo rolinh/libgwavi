@@ -1,6 +1,6 @@
-libgwavi (0.0.0-0+nmu1) buster; urgency=low
+libgwavi0 (0.0.0-0+nmu4) unstable; urgency=low
 
   * Closes: #959980
   * New upstream release.
 
- -- Folkert van Heusden <mail@vanheusden.com>  Fri, 08 May 2020 08:08:56 +0200
+ -- Folkert van Heusden <mail@vanheusden.com>  Sun, 07 Jun 2020 21:00:00 +0200

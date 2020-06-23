@@ -38,10 +38,10 @@ OBJS = ${SRCS:${SRC}/%.c=${OBJ}/%.o}
 .PATH: ${SRC}
 
 ${NAME}: ${OBJS}
-	${CC} ${CFLAGS} -Wl,-soname,lib${NAME}.so.${VERSION_MAJOR} -shared -o ${LIB}/lib${NAME}.so.${VERSION} ${OBJS}
-	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so.${VERSION_MAJOR}
-	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so.${VERSION_MAJOR}.${VERSION_MINOR}
-	${LN} -sf lib${NAME}.so.${VERSION} ${LIB}/lib${NAME}.so
+	${CC} ${CFLAGS} -Wl,-soname,lib${NAME}.so.${VERSION_MAJOR} -shared -o ${LIB}/lib${NAME}0.so.${VERSION} ${OBJS}
+	${LN} -sf lib${NAME}0.so.${VERSION} ${LIB}/lib${NAME}0.so.${VERSION_MAJOR}
+	${LN} -sf lib${NAME}0.so.${VERSION} ${LIB}/lib${NAME}0.so.${VERSION_MAJOR}.${VERSION_MINOR}
+	${LN} -sf lib${NAME}0.so.${VERSION} ${LIB}/lib${NAME}0.so
 
 ${OBJS}: ${OBJ}/%.o : ${SRC}/%.c
 	${CC} ${CFLAGS} -o $@ -c $<
@@ -79,10 +79,10 @@ mrproper: clean
 	${MAKE} -C ${TEST} mrproper
 
 package: clean
-	mkdir libgwavi-$(VERSION)
-	cp -a AUTHORS.md debian doc examples inc lib LICENSE Makefile obj README.md src test libgwavi-$(VERSION)
-	rm -rf libgwavi-$(VERSION)/doc/html
-	tar czf ../libgwavi_$(VERSION).orig.tar.gz libgwavi-$(VERSION)
-	rm -rf libgwavi-$(VERSION)
+	mkdir libgwavi0-$(VERSION)
+	cp -a AUTHORS.md debian doc examples inc lib LICENSE Makefile obj README.md src test libgwavi0-$(VERSION)
+	rm -rf libgwavi0-$(VERSION)/doc/html
+	tar czf ../libgwavi0_$(VERSION).orig.tar.gz libgwavi0-$(VERSION)
+	rm -rf libgwavi0-$(VERSION)
 
 .PHONY: all clean debug doc examples mrproper
