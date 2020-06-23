@@ -414,10 +414,20 @@ gwavi_close(struct gwavi_t *gwavi)
 
 ftell_failed:
 	perror("gwavi_close: (ftell)");
+	if (fclose(gwavi->out) == EOF) {
+		perror("gwavi_close (fclose)");
+		return -1;
+	}
+	free(gwavi);
 	return -1;
 
 fseek_failed:
 	perror("gwavi_close (fseek)");
+	if (fclose(gwavi->out) == EOF) {
+		perror("gwavi_close (fclose)");
+		return -1;
+	}
+	free(gwavi);
 	return -1;
 }
 
