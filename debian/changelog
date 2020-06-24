@@ -1,6 +1,7 @@
-libgwavi0 (0.0.0-1+nmu4) unstable; urgency=low
+libgwavi0 (0.0.0-2+nmu4) unstable; urgency=low
 
   * Closes: #959980
   * New upstream release.
+  * Added gwavi_define_audio
 
- -- Folkert van Heusden <mail@vanheusden.com>  Tue, 23 Jun 2020 10:10:10 +0200
+ -- Folkert van Heusden <mail@vanheusden.com>  Wed, 24 Jun 2020 10:10:10 +0200

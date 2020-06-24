@@ -39,10 +39,12 @@
 struct gwavi_t;
 struct gwavi_audio_t;
 
-/* Main ibrary functions */
+/* Main library functions */
 struct gwavi_t *gwavi_open(const char *filename, unsigned int width,
 			   unsigned int height, const char *fourcc, unsigned int fps,
 			   struct gwavi_audio_t *audio);
+struct gwavi_audio_t *gwavi_define_audio(unsigned int channels, unsigned int bits,
+			   unsigned int samples_per_second);
 int gwavi_add_frame(struct gwavi_t *gwavi, unsigned char *buffer, size_t len);
 int gwavi_add_audio(struct gwavi_t *gwavi, unsigned char *buffer, size_t len);
 int gwavi_close(struct gwavi_t *gwavi);

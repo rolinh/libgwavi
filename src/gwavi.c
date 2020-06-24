@@ -211,6 +211,29 @@ write_chars_bin_failed:
 }
 
 /**
+ * This function allows you to define audio parameters of an avi file.
+ *
+ * @param channels Number of auto channels.
+ * @param bits Number of bits per sample.
+ * @param samples_per_second Sample rate.
+ *
+ * @return 0 on success, -1 on error.
+ */
+struct gwavi_audio_t *
+gwavi_define_audio(unsigned int channels, unsigned int bits,
+			   unsigned int samples_per_second)
+{
+	struct gwavi_audio_t *out = (struct gwavi_audio_t *)malloc(
+			sizeof(struct gwavi_audio_t));
+
+	out->channels = channels;
+	out->bits = bits;
+	out->samples_per_second = samples_per_second;
+
+	return out;
+}
+
+/**
  * This function allows you to add an encoded video frame to the AVI file.
  *
  * @param gwavi Main gwavi structure initialized with gwavi_open()-
