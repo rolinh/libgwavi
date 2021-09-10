@@ -44,12 +44,12 @@ using this command:
 For a complete example, have a look at the demo application in the examples
 folder.
 
-If your in a hurry, here is a small explanation on how to use it.
+If you are in a hurry, here is a small explanation on how to use it.
 
 First, you need to include the header file.
-
-    #include "gwavi.h"
-
+```c
+#include "gwavi.h"
+```
 There is basically four main function that you will need to use:
 
   * `gwavi_open()`
@@ -60,7 +60,7 @@ There is basically four main function that you will need to use:
 
   * `gwavi_close()`
 
-Please, note that error checking has been voluntarily omitted int the examples
+Please, note that error checking has been voluntarily omitted in the examples
 below for the sake of the clarification.
 
 So first, you should declare a `gwavi_t` structure and initialize it. You can
@@ -69,40 +69,49 @@ channel to your AVI file.
 
 To declare a `gwavi_audio_t`, firstly, you can see it's a structure constructed of `channels`, `bits` and `samples_per_second`.
 To get these info, you can save the audio first, and then, open it using [VLC media player](https://www.videolan.org/vlc/).
-After that, Tools->Codec Infomation
-![image](https://user-images.githubusercontent.com/33785401/132865774-9169d5ca-016e-445c-b165-68260798af2d.png)
-For `channels`, if VLC says "Mono", write `1`; if it says "Stereo", write `2`.
-For `bits`, write as same as "Bits per sample".
-For `samples_per_second`, write as same as "Sample rate".
 
-By default, this program accepts audios whose codec in VLC is `araw` only.
-For example, the file extension is `wav`.
+After that, Tools -> Codec Infomation -> Codec
+
+![image](https://user-images.githubusercontent.com/33785401/132865774-9169d5ca-016e-445c-b165-68260798af2d.png)
+* For `channels`, if VLC says "Mono", write `1`; if it says "Stereo", write `2`.
+* For `bits`, write as same as "Bits per sample".
+* For `samples_per_second`, write as same as "Sample rate".
+
+By default, this program accepts audios whose codec in VLC shows `araw` only. For example, whose file extension is `wav`.
+
 Note! You may need to declare this BEFORE running `gwavi_open()`.
 
-    struct gwavi_t *gwavi;
-    struct gwavi_audio_t audio;
+For example:
+```c
+struct gwavi_t *gwavi;
+struct gwavi_audio_t audio = {
+        .channels = 2,
+        .bits = 16,
+        .samples_per_second = 44100
+};
 
-    gwavi = gwavi_open("foo.avi",
-                       1920,
-                       1080,
-                       "MJPG",
-                       30,
-                       &audio);
+gwavi = gwavi_open("foo.avi",
+                   1920,
+                   1080,
+                   "MJPG",
+                   30,
+                   &audio);
+```
 
 Note that the audio channel is optional and that you can pass `NULL` as the last
 argument of `gwavi_open()` if you don't need it.
 
 Then you add your video frames:
-
-    gwavi_add_frame(gwavi, buffer, buffer_length);
-
+```c
+gwavi_add_frame(gwavi, buffer, buffer_length);
+```
 You can also add audio with `gwavi_add_audio()`.
 
 And at the end, you can close the output file and free the allocated memory by
 calling the `gwavi_close()` function.
-
-    gwavi_close(gwavi);
-
+```c
+gwavi_close(gwavi);
+```
 # DOCUMENTATION
 
 The library documentation can be generated with `make doc` if you have
