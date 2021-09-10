@@ -67,6 +67,18 @@ So first, you should declare a `gwavi_t` structure and initialize it. You can
 optionally declare a `gwavi_audio_t` structure if you need to add an audio
 channel to your AVI file.
 
+To declare a `gwavi_audio_t`, firstly, you can see it's a structure constructed of `channels`, `bits` and `samples_per_second`.
+To get these info, you can save the audio first, and then, open it using [VLC media player](https://www.videolan.org/vlc/).
+After that, Tools->Codec Infomation
+![image](https://user-images.githubusercontent.com/33785401/132865774-9169d5ca-016e-445c-b165-68260798af2d.png)
+For `channels`, if VLC says "Mono", write `1`; if it says "Stereo", write `2`.
+For `bits`, write as same as "Bits per sample".
+For `samples_per_second`, write as same as "Sample rate".
+
+By default, this program accepts audios whose codec in VLC is `araw` only.
+For example, the file extension is `wav`.
+Note! You may need to declare this BEFORE running `gwavi_open()`.
+
     struct gwavi_t *gwavi;
     struct gwavi_audio_t audio;
 
