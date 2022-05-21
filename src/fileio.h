@@ -36,11 +36,14 @@
 #ifndef H_FILEIO
 #define H_FILEIO
 
+#include <stddef.h>
+#include <stdio.h>
+
 /* Function prototypes */
 int write_int(FILE *out, unsigned int n);
 int write_short(FILE *out, unsigned int n);
 int write_chars(FILE *out, const char *s);
-int write_chars_bin(FILE *out, const char *s, int count);
+int write_chars_bin(FILE *out, const char *s, size_t count);
 
 #endif /* ndef H_FILEIO */
 

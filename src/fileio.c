@@ -41,10 +41,10 @@ write_int(FILE *out, unsigned int n)
 {
 	unsigned char buffer[4];
 
-	buffer[0] = n;
-	buffer[1] = n >> 8;
-	buffer[2] = n >> 16;
-	buffer[3] = n >> 24;
+	buffer[0] = (0xff & (n));
+	buffer[1] = (0xff & (n >> 8));
+	buffer[2] = (0xff & (n >> 16));
+	buffer[3] = (0xff & (n >> 24));
 
 	if (fwrite(buffer, 1, 4, out) != 4)
 		return -1;
@@ -57,8 +57,8 @@ write_short(FILE *out, unsigned int n)
 {
 	unsigned char buffer[2];
 
-	buffer[0] = n;
-	buffer[1] = n >> 8;
+	buffer[0] = (0xff & (n));
+	buffer[1] = (0xff & (n >> 8));
 
 	if (fwrite(buffer, 1, 2, out) != 2)
 		return -1;
@@ -79,7 +79,7 @@ write_chars(FILE *out, const char *s)
 }
 
 int
-write_chars_bin(FILE *out, const char *s, int count)
+write_chars_bin(FILE *out, const char *s, size_t count)
 {
 	if (fwrite(s, 1, count, out) != count)
 		return -1;

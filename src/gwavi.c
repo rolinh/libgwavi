@@ -34,6 +34,11 @@
  * This is the file containing gwavi library functions.
  */
 
+#if defined(_MSC_VER) && !defined(_CRT_SECURE_NO_WARNINGS)
+/* MSVC, We know now to use fopen/strcpy */
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
