@@ -43,8 +43,8 @@ struct gwavi_audio_t;
 struct gwavi_t *gwavi_open(const char *filename, unsigned int width,
 			   unsigned int height, const char *fourcc, unsigned int fps,
 			   struct gwavi_audio_t *audio);
-int gwavi_add_frame(struct gwavi_t *gwavi, unsigned char *buffer, size_t len);
-int gwavi_add_audio(struct gwavi_t *gwavi, unsigned char *buffer, size_t len);
+int gwavi_add_frame(struct gwavi_t *gwavi, const unsigned char *buffer, size_t len);
+int gwavi_add_audio(struct gwavi_t *gwavi, const unsigned char *buffer, size_t len);
 int gwavi_close(struct gwavi_t *gwavi);
 
 /*
