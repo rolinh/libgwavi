@@ -65,16 +65,16 @@
  * FourCC is a sequence of four chars used to uniquely identify data formats.
  * For more information, you can visit www.fourcc.org.
  * @param fps Number of frames per second of your video. It needs to be > 0.
- * @param audio This parameter is optionnal. It is used for the audio track. If
- * you do not want to add an audio track to your AVI file, simply pass NULL for
- * this argument.
+ * @param use_audio Defines wether you want to add audio to the AVI file or
+ * not. Use '1' for yes, '0' for no. Setting this to '1' requires a call to
+ * gwavi_set_audio_parameters() as well.
  *
  * @return Structure containing required information in order to create the AVI
  * file. If an error occured, NULL is returned.
  */
 struct gwavi_t *
 gwavi_open(const char *filename, unsigned int width, unsigned int height,
-	   const char *fourcc, unsigned int fps, struct gwavi_audio_t *audio)
+	   const char *fourcc, unsigned int fps, int use_audio)
 {
 	struct gwavi_t *gwavi;
 	FILE *out;
@@ -103,7 +103,7 @@ gwavi_open(const char *filename, unsigned int width, unsigned int height,
 	gwavi->avi_header.data_rate = width * height * 3;
 	gwavi->avi_header.flags = 0x10;
 
-	if (audio)
+	if (use_audio)
 		gwavi->avi_header.data_streams = 2;
 	else
 		gwavi->avi_header.data_streams = 1;
@@ -139,34 +139,6 @@ gwavi_open(const char *filename, unsigned int width, unsigned int height,
 
 	gwavi->stream_format_v.palette = 0;
 	gwavi->stream_format_v.palette_count = 0;
-
-	if (audio) {
-		/* set stream header */
-		memcpy(gwavi->stream_header_a.data_type, "auds", 4);
-		gwavi->stream_header_a.codec[0] = 1;
-		gwavi->stream_header_a.codec[1] = 0;
-		gwavi->stream_header_a.codec[2] = 0;
-		gwavi->stream_header_a.codec[3] = 0;
-		gwavi->stream_header_a.time_scale = 1;
-		gwavi->stream_header_a.data_rate = audio->samples_per_second;
-		gwavi->stream_header_a.buffer_size =
-			audio->channels * (audio->bits / 8) * audio->samples_per_second;
-		/* when set to -1, drivers use default quality value */
-		gwavi->stream_header_a.audio_quality = -1;
-		gwavi->stream_header_a.sample_size =
-			(audio->bits / 8) * audio->channels;
-
-		/* set stream format */
-		gwavi->stream_format_a.format_type = 1;
-		gwavi->stream_format_a.channels = audio->channels;
-		gwavi->stream_format_a.sample_rate = audio->samples_per_second;
-		gwavi->stream_format_a.bytes_per_second =
-			audio->channels * (audio->bits / 8) * audio->samples_per_second;
-		gwavi->stream_format_a.block_align =
-			audio->channels * (audio->bits / 8);
-		gwavi->stream_format_a.bits_per_sample = audio->bits;
-		gwavi->stream_format_a.size = 0;
-	}
 
 	if (write_chars_bin(out, "RIFF", 4) == -1)
 		goto write_chars_bin_failed;
@@ -477,6 +449,53 @@ gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc)
 		((unsigned int)fourcc[2] << 16) +
 		((unsigned int)fourcc[1] << 8) +
 		((unsigned int)fourcc[0]);
+
+	return 0;
+}
+
+/**
+ * This function allows you to set the audio parameters.
+ *
+ * @param gwavi Main gwavi structure initialized with gwavi_open()-
+ * @param bits  Number of bits per sample, e.g. 16
+ * @param channels Number of channels, e.g. 1 or 2
+ * @param sample_rate Samples per second, e.g. 44100 or 48000
+ *
+ * @return 0 on success, -1 on error.
+ */
+int
+gwavi_set_audio_parameters(struct gwavi_t *gwavi, unsigned bits, unsigned
+		channels, unsigned sample_rate)
+{
+	gwavi->stream_format_a.bits_per_sample = bits;
+	gwavi->stream_format_a.channels = channels;
+	gwavi->stream_format_a.sample_rate = sample_rate;
+
+	/* set stream header */
+	memcpy(gwavi->stream_header_a.data_type, "auds", 4);
+	gwavi->stream_header_a.codec[0] = 1;
+	gwavi->stream_header_a.codec[1] = 0;
+	gwavi->stream_header_a.codec[2] = 0;
+	gwavi->stream_header_a.codec[3] = 0;
+	gwavi->stream_header_a.time_scale = 1;
+	gwavi->stream_header_a.data_rate = sample_rate;
+	gwavi->stream_header_a.buffer_size =
+		channels * (bits / 8) * sample_rate;
+	/* when set to -1, drivers use default quality value */
+	gwavi->stream_header_a.audio_quality = -1;
+	gwavi->stream_header_a.sample_size =
+		(bits / 8) * channels;
+
+	/* set stream format */
+	gwavi->stream_format_a.format_type = 1;
+	gwavi->stream_format_a.channels = channels;
+	gwavi->stream_format_a.sample_rate = sample_rate;
+	gwavi->stream_format_a.bytes_per_second =
+		channels * (bits / 8) * sample_rate;
+	gwavi->stream_format_a.block_align =
+		channels * (bits / 8);
+	gwavi->stream_format_a.bits_per_sample = bits;
+	gwavi->stream_format_a.size = 0;
 
 	return 0;
 }

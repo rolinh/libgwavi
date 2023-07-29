@@ -87,11 +87,7 @@ Note! You may need to declare this BEFORE running `gwavi_open()`.
 For example:
 ```c
 struct gwavi_t *gwavi;
-struct gwavi_audio_t audio = {
-        .channels = 2,
-        .bits = 16,
-        .samples_per_second = 44100
-};
+struct gwavi_audio_t audio;
 
 gwavi = gwavi_open("foo.avi",
                    1920,
