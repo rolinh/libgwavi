@@ -42,7 +42,7 @@ struct gwavi_audio_t;
 /* Main ibrary functions */
 struct gwavi_t *gwavi_open(const char *filename, unsigned int width,
 			   unsigned int height, const char *fourcc, unsigned int fps,
-			   struct gwavi_audio_t *audio);
+			   int use_audio);
 int gwavi_add_frame(struct gwavi_t *gwavi, const unsigned char *buffer, size_t len);
 int gwavi_add_audio(struct gwavi_t *gwavi, const unsigned char *buffer, size_t len);
 int gwavi_close(struct gwavi_t *gwavi);
@@ -57,6 +57,8 @@ int gwavi_set_framerate(struct gwavi_t *gwavi, unsigned int fps);
 int gwavi_set_codec(struct gwavi_t *gwavi, const char *fourcc);
 int gwavi_set_size(struct gwavi_t *gwavi, unsigned int width,
 		    unsigned int height);
+int gwavi_set_audio_parameters(struct gwavi_t *gwavi, unsigned bits, unsigned
+		channels, unsigned sample_rate);
 
 #endif /* ndef H_GWAVI */
 

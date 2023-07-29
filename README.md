@@ -28,7 +28,10 @@ library to be reliable. So here is what has already changed from `libkohn-avi`:
 This library has no dependencies, you only need the standard C library.
 To generate `libgwavi.so`, just type the following from the root's directory:
 
-    make
+    mkdir build
+    cd build
+    cmake ..
+    make install
 
 To generate the documentation of the library functions, type the following:
 
@@ -84,11 +87,7 @@ Note! You may need to declare this BEFORE running `gwavi_open()`.
 For example:
 ```c
 struct gwavi_t *gwavi;
-struct gwavi_audio_t audio = {
-        .channels = 2,
-        .bits = 16,
-        .samples_per_second = 44100
-};
+struct gwavi_audio_t audio;
 
 gwavi = gwavi_open("foo.avi",
                    1920,
