@@ -28,7 +28,10 @@ library to be reliable. So here is what has already changed from `libkohn-avi`:
 This library has no dependencies, you only need the standard C library.
 To generate `libgwavi.so`, just type the following from the root's directory:
 
-    make
+    mkdir build
+    cd build
+    cmake ..
+    make install
 
 To generate the documentation of the library functions, type the following:
 
